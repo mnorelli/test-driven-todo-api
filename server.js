@@ -59,20 +59,22 @@ app.post('/api/todos', function create(req, res) {
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
-  Todo.create()
+  
+  // Todo.create()
 });
 
 app.get('/api/todos/:id', function show(req, res) {
   /* This endpoint will return a single todo with the
    * id specified in the route parameter (:id)
    */
-  var id = req.params.id
-  todos.forEach(function(t){
-    if (t._id === id) {
-      console.log("Found "+t)
-      res.json(t)
-    } 
-  });
+  var id = parseInt(req.params.id)
+  for (i=0;i<todos.length;i++){
+  // todos.forEach(function(a){
+    if (todos[i]._id === id) {
+      console.log("Returning",todos[i]._id,todos[i].task)
+      res.json(todos[i])
+    }
+  };
 });
 
 app.put('/api/todos/:id', function update(req, res) {
