@@ -1,7 +1,8 @@
 // require express and other modules
 var express = require('express'),
     app = express(),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    helper = require('./helper');
 
 // configure bodyParser (for receiving form data)
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -59,23 +60,15 @@ app.post('/api/todos', function create(req, res) {
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
-   function makeId(){
-     var oldId = 0
-     for (i=0;i<todos.length;i++){
-       if (todos[i]._id > oldId) {
-         oldId = todos[i]._id
-       }
-     }
-     return oldId + 1
-   }
 
-  var id = makeId();
+  var id = helper.makeId(todos,"_id");
   var task = req.body.task;
   var description = req.body.description;
 
-  newTodo = {_id:id, task:task, description:description}
+  newTodo = {_id:id, task:task, description:description};
+  console.log("Make new:",id,task,description);
 
-  todos.push(newTodo)
+  todos.push(newTodo);
   res.json(newTodo);
   // Todo.create()
 
@@ -89,10 +82,10 @@ app.get('/api/todos/:id', function show(req, res) {
   for (i=0;i<todos.length;i++){
   // todos.forEach(function(a){
     if (todos[i]._id === id) {
-      console.log("Returning",todos[i]._id,todos[i].task)
-      res.json(todos[i])
+      console.log("Returning",todos[i]._id,todos[i].task);
+      res.json(todos[i]);
     }
-  };
+  }
 });
 
 app.put('/api/todos/:id', function update(req, res) {
@@ -107,6 +100,15 @@ app.delete('/api/todos/:id', function destroy(req, res) {
    * id specified in the route parameter (:id) and respond
    * with success.
    */
+   var id = parseInt(req.params.id)
+   for (i=0;i<todos.length;i++){
+   // todos.forEach(function(a){
+     if (todos[i]._id === id) {
+       console.log("Deleting",todos[i]._id,todos[i].task);
+       todos.splice(i,1)
+       res.json(todos[i]);
+     }
+   }
 });
 
 /**********
