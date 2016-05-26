@@ -2,6 +2,7 @@
 
 var helper = {};
 
+// given an array and an ID key, make a unique ID
 helper.makeId = function(array,id){
   var oldId = 0
   for (i=0;i<array.length;i++){
@@ -12,14 +13,14 @@ helper.makeId = function(array,id){
   return oldId + 1
 }
 
-  var id = parseInt(req.params.id)
-  for (i=0;i<todos.length;i++){
-  // todos.forEach(function(a){
-   if (todos[i]._id === id) {
-     console.log("Deleting",todos[i]._id,todos[i].task);
-     todos.splice(i,1)
-     res.json(todos[i]);
-   }
+// given an array, and ID key, and a value to find, 
+// return the array element ID whose ID equals value
+helper.findOne = function(array,id,value){
+  for (i=0;i<array.length;i++){
+    if (array[i][id] === value) {
+      return i;
+    }
   }
+}
 
 module.exports = helper;

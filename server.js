@@ -66,7 +66,7 @@ app.post('/api/todos', function create(req, res) {
   var description = req.body.description;
 
   newTodo = {_id:id, task:task, description:description};
-  console.log("Make new:",id,task,description);
+  console.log("Make new:",newTodo);
 
   todos.push(newTodo);
   res.json(newTodo);
@@ -78,14 +78,10 @@ app.get('/api/todos/:id', function show(req, res) {
   /* This endpoint will return a single todo with the
    * id specified in the route parameter (:id)
    */
-  var id = parseInt(req.params.id)
-  for (i=0;i<todos.length;i++){
-  // todos.forEach(function(a){
-    if (todos[i]._id === id) {
-      console.log("Returning",todos[i]._id,todos[i].task);
-      res.json(todos[i]);
-    }
-  }
+  var id = parseInt(req.params.id);
+  var i = helper.findOne(todos,"_id",id);
+  console.log("Returning",todos[i]._id,todos[i].task);
+  res.json(todos[i]);
 });
 
 app.put('/api/todos/:id', function update(req, res) {
@@ -100,15 +96,11 @@ app.delete('/api/todos/:id', function destroy(req, res) {
    * id specified in the route parameter (:id) and respond
    * with success.
    */
-   var id = parseInt(req.params.id)
-   for (i=0;i<todos.length;i++){
-   // todos.forEach(function(a){
-     if (todos[i]._id === id) {
-       console.log("Deleting",todos[i]._id,todos[i].task);
-       todos.splice(i,1)
-       res.json(todos[i]);
-     }
-   }
+  var id = parseInt(req.params.id);
+  var i = helper.findOne(todos,"_id",id);
+  console.log("Deleting",todos[i]._id,todos[i].task);
+  todos.splice(i,1)
+  res.json(todos[i]);
 });
 
 /**********
