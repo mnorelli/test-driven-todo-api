@@ -6,8 +6,8 @@ var helper = {};
 helper.makeId = function(array,id){
   var oldId = 0
   for (i=0;i<array.length;i++){
-    if (array[i].id > oldId) {
-      oldId = array[i].id
+    if (array[i][id] > oldId) {
+      oldId = array[i][id]
     }
   }
   return oldId + 1

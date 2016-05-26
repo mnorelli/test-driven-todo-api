@@ -62,10 +62,11 @@ app.post('/api/todos', function create(req, res) {
    */
 
   var id = helper.makeId(todos,"_id");
+  console.log("NEW ID IS",id);
   var task = req.body.task;
   var description = req.body.description;
 
-  newTodo = {_id:id, task:task, description:description};
+  var newTodo = {_id:id, task:task, description:description};
   console.log("Make new:",newTodo);
 
   todos.push(newTodo);
@@ -89,6 +90,19 @@ app.put('/api/todos/:id', function update(req, res) {
    * id specified in the route parameter (:id) and respond
    * with the newly updated todo.
    */
+  var id = parseInt(req.params.id);
+  var i = helper.findOne(todos,"_id",id);
+  var oldTodo = todos[i];
+
+  var task = req.body.task;
+  var description = req.body.description;
+  var newTodo = {_id:id, task:task, description:description};
+
+  console.log("Updating",todos[i]._id,todos[i].task,"with",newTodo);
+  todos.splice(i,1)
+  todos.push(newTodo);
+  res.json(newTodo);
+
 });
 
 app.delete('/api/todos/:id', function destroy(req, res) {
