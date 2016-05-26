@@ -48,6 +48,17 @@ app.get('/api/todos/search', function search(req, res) {
   /* This endpoint responds with the search results from the
    * query in the request. COMPLETE THIS ENDPOINT LAST.
    */
+  var results = []
+  var word = req.query['q']
+  console.log("search word",word)
+  for (i=0;i<todos.length;i++){
+    if (todos[i].task === word) {
+      console.log("Found",todos[i]._id,todos[i].task);
+      results.push(todos[i]);
+    }
+  }
+  res.json({todos:results})
+
 });
 
 app.get('/api/todos', function index(req, res) {
@@ -62,7 +73,6 @@ app.post('/api/todos', function create(req, res) {
    */
 
   var id = helper.makeId(todos,"_id");
-  console.log("NEW ID IS",id);
   var task = req.body.task;
   var description = req.body.description;
 
@@ -113,8 +123,8 @@ app.delete('/api/todos/:id', function destroy(req, res) {
   var id = parseInt(req.params.id);
   var i = helper.findOne(todos,"_id",id);
   console.log("Deleting",todos[i]._id,todos[i].task);
-  todos.splice(i,1)
   res.json(todos[i]);
+  todos.splice(i,1)
 });
 
 /**********
