@@ -48,6 +48,13 @@ $(document).ready(function() {
     }
   });
 
+  // listen for submit event on form
+  $searchTodo.on('submit', function (event) {
+    event.preventDefault();
+
+}  // listen for submit even on form
+  $createTodo.on('submit', function (event) {
+    event.preventDefault();
   // listen for submit even on form
   $createTodo.on('submit', function (event) {
     event.preventDefault();
