@@ -13,6 +13,9 @@ $(document).ready(function() {
   // form to create new todo
   var $createTodo = $('#create-todo');
 
+    // form to search todos
+  var $searchTodo = $('#search-todo');
+
   // compile handlebars template
   var source = $('#todos-template').html();
   var template = Handlebars.compile(source);
